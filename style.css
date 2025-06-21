@@ -72,11 +72,7 @@ body {
   margin-top: 10px; /* space above the username field */
 }
 
-/* Login page only: Add spacing around logo */
-.login-page .logo {
-  margin-bottom: 25px; /* space below the logo */
-  margin-top: 10px;     /* optional: space above the logo */
-}
+
 
 .login-page .signup-title {
   margin-top: 10px;
