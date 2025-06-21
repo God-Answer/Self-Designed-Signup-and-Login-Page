@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anstar | Home</title>
+    <link rel="stylesheet" href="home.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f9;
+        color: #333;
+      }
+      .top-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #e74c3c;
+      }
+      .search-bar {
+        display: flex;
+        gap: 10px;
+      }
+      .search-bar input {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 200px;
+      }
+      .search-bar button {
+        background-color: #e74c3c;
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .search-bar button:hover {
+        background-color: #c0392b;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .user-profile img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+      .dashboard {
+        display: flex;
+      }
+      .sidebar {
+        width: 220px;
+        background-color: #ffffff;
+        height: 100vh;
+        padding: 30px 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 60px;
+      }
+      .sidebar ul {
+        list-style: none;
+      }
+      .sidebar li {
+        margin-bottom: 20px;
+      }
+      .sidebar a {
+        text-decoration: none;
+        color: #555;
+        font-size: 16px;
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: background 0.2s;
+      }
+      .sidebar a:hover {
+        background-color: #f0f0f0;
+        color: #e74c3c;
+      }
+      .main-content {
+        flex: 1;
+        padding: 40px;
+        background-color: #f9fbfc;
+        min-height: 100vh;
+      }
+      .main-content h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #222;
+      }
+      .main-content p {
+        margin-bottom: 30px;
+        color: #555;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      table thead {
+        background-color: #e74c3c;
+        color: white;
+      }
+      table th,
+      table td {
+        text-align: left;
+        padding: 15px;
+      }
+      table tbody tr:nth-child(even) {
+        background-color: #f5f5f5;
+      }
+      .load-more {
+        margin-top: 20px;
+        background-color: #e74c3c;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #searchInput {
+        padding: 8px;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .load-more:hover {
+        background-color: #c0392b;
+      }
+      input[type="text"],
+      input[type="email"] {
+        padding: 8px;
+        margin-right: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="logo">ANSTAR</div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." />
+        <button>Search</button>
+      </div>
+      <div class="user-profile">
+        <span id="usernameDisplay">Welcome, User</span>
+        <img src="images/meerkat.png" alt="Profile" />
+      </div>
+    </header>
+
+    <div class="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#" id="membersLink">Members</a></li>
+            <li><a href="#" id="logoutLink">Logout</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content" id="mainContent">
+        <h1>Welcome to Anstar, <span id="namePlaceholder">User</span>!</h1>
+        <p>
+          Your all-in-one productivity dashboard for smarter workflows and
+          better insights.
+        </p>
+      </main>
+    </div>
+
+    <script>
+      const user = JSON.parse(localStorage.getItem("user"));
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const namePlaceholder = document.getElementById("namePlaceholder");
+      const logoutLink = document.getElementById("logoutLink");
+      const membersLink = document.getElementById("membersLink");
+      const mainContent = document.getElementById("mainContent");
+
+      if (user) {
+        usernameDisplay.textContent = `Welcome, ${user.name}`;
+        namePlaceholder.textContent = user.name;
+      } else {
+        window.location.href = "login.html";
+      }
+
+      logoutLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        localStorage.removeItem("user");
+        alert("You have been logged out.");
+        window.location.href = "login.html";
+      });
+
+      let members = [
+        {
+          name: "Michael Asante",
+          phone: "0244567890",
+          email: "michael.asante@gmail.com",
+        },
+        {
+          name: "Linda Owusu",
+          phone: "0201234567",
+          email: "linda.owusu@yahoo.com",
+        },
+        {
+          name: "Kwame Boateng",
+          phone: "0559876543",
+          email: "kwame.boateng@outlook.com",
+        },
+        {
+          name: "Akosua Mensah",
+          phone: "0273456789",
+          email: "akosua.mensah@gmail.com",
+        },
+        {
+          name: "Josephine Addo",
+          phone: "0501123344",
+          email: "josephine.addo@protonmail.com",
+        },
+        {
+          name: "Daniel Opoku",
+          phone: "0267891234",
+          email: "daniel.opoku@hotmail.com",
+        },
+        {
+          name: "Sarah Amankwah",
+          phone: "0208765432",
+          email: "sarah.amankwah@gmail.com",
+        },
+        {
+          name: "Yaw Ofori",
+          phone: "0543210987",
+          email: "yaw.ofori@yahoo.com",
+        },
+        {
+          name: "Nana Adjei",
+          phone: "0252345678",
+          email: "nana.adjei@gmail.com",
+        },
+        {
+          name: "Efua Darko",
+          phone: "0567894321",
+          email: "efua.darko@outlook.com",
+        },
+      ];
+
+      membersLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        mainContent.innerHTML = `
+          <h1>Members List</h1>
+          <button id="showFormBtn" style="padding: 8px 12px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px;">Add Member</button>
+          <div id="memberForm" style="display: none; margin-bottom: 20px;">
+            <input type="text" id="memberName" placeholder="Name" />
+            <input type="text" id="memberPhone" placeholder="Phone Number" />
+            <input type="email" id="memberEmail" placeholder="Email" />
+            <button onclick="addMember()" style="padding: 8px 12px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer;">Save Member</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="membersTableBody"></tbody>
+          </table>
+        `;
+        loadMembers();
+        document.getElementById("showFormBtn").addEventListener("click", () => {
+          const form = document.getElementById("memberForm");
+          form.style.display = form.style.display === "none" ? "block" : "none";
+        });
+      });
+
+      function loadMembers() {
+        const tbody = document.getElementById("membersTableBody");
+        tbody.innerHTML = "";
+        members.forEach((member, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>
+              <span id="nameDisplay${index}">${member.name}</span>
+              <input type="text" id="nameEdit${index}" value="${member.name}" style="display:none;" >
+            </td>
+            <td>
+              <span id="phoneDisplay${index}">${member.phone}</span>
+              <input type="text" id="phoneEdit${index}" value="${member.phone}" style="display:none;">
+            </td>
+            <td>
+              <span id="emailDisplay${index}">${member.email}</span>
+              <input type="email" id="emailEdit${index}" value="${member.email}" style="display:none;">
+            </td>
+            <td>
+              <button onclick="editMember(${index})"style="background-color: #f39c12; color: white; border: none; padding: 6px 12px; border-radius: 4px; ">Edit</button>
+              <button onclick="saveMember(${index})" style="display:none;" id="saveBtn${index}">Save</button>
+              <button onclick="deleteMember(${index})"style="background-color: #f39c12; color: white; border: none; padding: 6px 12px; border-radius: 4px;">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+
+      function addMember() {
+        const name = document.getElementById("memberName").value.trim();
+        const phone = document.getElementById("memberPhone").value.trim();
+        const email = document.getElementById("memberEmail").value.trim();
+
+        if (name && phone && email) {
+          members.push({ name, phone, email });
+          loadMembers();
+          document.getElementById("memberForm").style.display = "none";
+
+          alert("Member added successfully!");
+
+          document.getElementById("memberName").value = "";
+          document.getElementById("memberPhone").value = "";
+          document.getElementById("memberEmail").value = "";
+        } else {
+          alert("Please fill in all fields.");
+        }
+      }
+
+      function editMember(index) {
+        document.getElementById(`nameDisplay${index}`).style.display = "none";
+        document.getElementById(`phoneDisplay${index}`).style.display = "none";
+        document.getElementById(`emailDisplay${index}`).style.display = "none";
+
+        document.getElementById(`nameEdit${index}`).style.display = "inline";
+        document.getElementById(`phoneEdit${index}`).style.display = "inline";
+        document.getElementById(`emailEdit${index}`).style.display = "inline";
+
+        document.getElementById(`saveBtn${index}`).style.display = "inline";
+      }
+
+      function saveMember(index) {
+        const name = document.getElementById(`nameEdit${index}`).value.trim();
+        const phone = document.getElementById(`phoneEdit${index}`).value.trim();
+        const email = document.getElementById(`emailEdit${index}`).value.trim();
+        if (name && phone && email) {
+          members[index] = { name, phone, email };
+          loadMembers();
+        } else {
+          alert("Please fill in all fields.");
+        }
+      }
+
+      function deleteMember(index) {
+        if (confirm("Are you sure you want to delete this member?")) {
+          members.splice(index, 1);
+          loadMembers();
+        }
+      }
+    </script>
+  </body>
+</html>

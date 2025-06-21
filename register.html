@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Anstar</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="register-page">
+    <div class="signup-container">
+      <!-- Left Panel (Image or Visual Section with Overlay Text) -->
+      <div class="left-panel">
+        <img
+          src="images/proxy-image.png"
+          alt="Background-image"
+          class="hero-image"
+        />
+        <div class="overlay-text">
+          <h2>Ready for something new?</h2>
+          <p>Create your Anstar account and unlock endless possibilities.</p>
+        </div>
+      </div>
+
+      <!-- Right Panel (Form Section) -->
+      <div class="right-panel">
+        <div class="form-container">
+          <img src="images/Anstar-logo.png" class="logo" alt="Anstar Logo" />
+          <h2 class="signup-title">Create Account</h2>
+
+          <form id="registerForm">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Fullname" required />
+
+            <label for="email/phoneNumber">Email or Phone Number</label>
+            <input
+              type="text"
+              id="contact"
+              placeholder="Email or Phone Number"
+              required
+            />
+
+            <label for="dob">Date of Birth</label>
+            <div class="dob-fields">
+              <input
+                type="text"
+                placeholder="dd"
+                maxlength="2"
+                id="dob-day"
+                required
+              />
+              <select id="dob-month" required>
+                <option value="" disabled selected>Month</option>
+                <option>January</option>
+                <option>February</option>
+                <option>March</option>
+                <option>April</option>
+                <option>May</option>
+                <option>June</option>
+                <option>July</option>
+                <option>August</option>
+                <option>September</option>
+                <option>October</option>
+                <option>November</option>
+                <option>December</option>
+              </select>
+              <input
+                type="text"
+                placeholder="yyyy"
+                maxlength="4"
+                id="dob-year"
+                required
+              />
+            </div>
+
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+              <option value="" disabled selected>Select</option>
+              <option>Man</option>
+              <option>Woman</option>
+              <option>Non-binary</option>
+              <option>Prefer not to say</option>
+            </select>
+
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              required
+            />
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              placeholder="Confirm Password"
+              required
+            />
+
+            <div class="options">
+              <input type="checkbox" id="terms" required />
+              <label for="terms">
+                I agree to the Terms and Privacy Policy of Anstar
+              </label>
+            </div>
+
+            <button type="submit" class="sign-up-button">SIGN UP</button>
+
+            <p class="center-text">
+              Already have an account? <a href="login.html">Login now</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
