@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "index.html"; // Redirect to home page
       } else {
         alert("Invalid credentials");
+         window.location.href = "register.html"; 
       }
     });
   }
